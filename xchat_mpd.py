@@ -34,6 +34,12 @@ def send_status(client):
       status = "a song with missing or wrong tags"
   xchat.command("me is listening to %s" % (status))
 
+def command_prev(client, args):
+  client.previous()
+
+def command_next(client, args):
+  client.next();
+
 def command_play(client, args):
   client.play()
 
@@ -57,7 +63,9 @@ commands_selection={
     "play"  : command_play,
     "pause" : command_pause,
     "stop"  : command_stop,
-    "setvol": command_set_volume
+    "setvol": command_set_volume,
+    "prev"  : command_prev,
+    "next"  : command_next
   }
 
 def EXChatMPD(word, word_eol, userdata):
