@@ -18,7 +18,7 @@ import xchat
 import mpd
 
 __module_name__ = "MPD Status"
-__module_version__ = "0.1"
+__module_version__ = "0.2"
 __module_description__ = "MPD Current playing song"
 
 def sendStatus(word, word_eolm, userdata):
@@ -30,9 +30,14 @@ def sendStatus(word, word_eolm, userdata):
   except:
     current_song = {}
   if current_song == {}:
-	  status = "silence"
+     status = "silence"
   else:
-	  status = current_song["title"] + " - " + current_song["artist"] + " (" + current_song["album"] + ")"
+     try:
+       status = current_song["title"] + " - " + current_song["artist"]
+       if "album" in current_song:
+         status = status +  " (" + current_song["album"] + ")"
+     except:
+       status = "a song with missing tags"
   xchat.command("me is listening to %s" % (status))
   return xchat.EAT_ALL
   
