@@ -18,15 +18,12 @@ import xchat
 import mpd
 
 __module_name__ = "EXChatMPD"
-__module_version__ = "0.4"
+__module_version__ = "0.5"
 __module_description__ = "MPD XChat Control"
 
-def send_status():
-  try:
-    current_song = client.currentsong()
-  except:
-    current_song = {}
-  if current_song == {}:
+def send_status(client):
+  current_song = client.currentsong()
+  if(current_song == {}):
     status = "silence"
   else:
     try:
@@ -34,7 +31,7 @@ def send_status():
       if "album" in current_song:
         status = status +  " (" + current_song["album"] + ")"
     except:
-      status = "a song with missing tags"
+      status = "a song with missing or wrong tags"
   xchat.command("me is listening to %s" % (status))
 
 def command_play(client, args):
@@ -68,7 +65,7 @@ def EXChatMPD(word, word_eol, userdata):
   try:
     client.connect("localhost",6600) #TODO parametrize
     if(len(word)<=1):
-      send_status()
+      send_status(client)
     else: #it's got at least a command
       commands_selection.get(word[1],command_invalid)(client, word[2::])
     client.disconnect()
