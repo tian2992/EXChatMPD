@@ -21,7 +21,6 @@ __module_name__ = "MPD Status"
 __module_version__ = "0.3"
 __module_description__ = "MPD Current playing song"
 
-
 def send_status():
   try:
     current_song = client.currentsong()
@@ -38,21 +37,40 @@ def send_status():
       status = "a song with missing tags"
   xchat.command("me is listening to %s" % (status))
 
-def command_pause():
-  client.pause()
+def command_play(client, args):
+  client.play()
 
-def command_set_volume(argString):
-  volume = int(argString)
-  client.setvol(volume)
+def command_pause(client, args):
+  client.pause()
+  
+def command_stop(client, args):
+  client.stop()
+
+def command_set_volume(client, args):
+  try:
+    volume = int(args[0])
+    client.setvol(volume)
+  except:
+    print("invalid argument value")
+    
+def command_invalid(client, args):
+  print("unknown command")
+  
+commands_selection={
+    "play"  : command_play,
+    "pause" : command_pause,
+    "stop"  : command_stop,
+    "setvol": command_set_volume
+  }
 
 def EXChatMPD(word, word_eol, userdata):
   client = mpd.MPDClient()
   try:
-    client.connect("localhost",6600) #TODO: parametrize
-    if (word_eol[0]=="mpd"):
+    client.connect("localhost",6600) #TODO parametrize
+    if(len(word)<=1):
       send_status()
-    else: #it's not status
-      
+    else: #it's got at least a command
+      commands_selection.get(word[1],command_invalid)(client, word[2::])
     client.disconnect()
   except: #fail to connect
     print("connection failed")
