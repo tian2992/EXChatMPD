@@ -17,9 +17,9 @@ import os
 import xchat
 import mpd
 
-__module_name__ = "MPD Status"
-__module_version__ = "0.3"
-__module_description__ = "MPD Current playing song"
+__module_name__ = "EXChatMPD"
+__module_version__ = "0.4"
+__module_description__ = "MPD XChat Control"
 
 def send_status():
   try:
