@@ -2,9 +2,9 @@ Copyright Sebastian Oliva, 2010 <http://sebastianoliva.com>
 Distributed under the ISC license
 (Equivalent to the X11 licence, or the Simplified BSD)
 
-Dependencies: python-mpd (install using pip or your package manager)
+Dependencies: python-mpd (comes installed or install using pip or your package manager) 
 
-To install, just copy the .py file to ~/.xchat2 and load it at the Menu Window > Load
+To install, run ./install_script.sh and load xchat_mpd.py at the XChat Menu Window > Plugins and Scripts > Load
 
 To use just type /mpd at xchat
 
